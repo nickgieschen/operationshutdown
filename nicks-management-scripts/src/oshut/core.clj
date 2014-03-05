@@ -1,14 +1,7 @@
-;; A script to match players to get-rounds
-;; Requires a file called rosters.csv which includes all the players. Should be of the form:
-;;   T: [Team Name]
-;;   [Player Name], [Team and positions]
-;;
-;; E.g.
-;;   T: SNK Crushers
-;;   Anthony Rendon, (WAS - 2B,3B)
-;;
-;; Also requires a file called draft.csv which contains the previous years draft info. It is simply a table with teams as columns and
-;; players in the rows where the row number represents the round they were drafted in.
+;; This script allow you to either generate a file matching players to draft rounds or generate
+;; files representing players available in the draft. Uncomment the fn at the end of the file
+;; for the functionality you want to run.
+
 
 (ns oshut.core
   (:require [clojure-csv.core :as csv]
@@ -98,7 +91,7 @@
 
 (defn norm-name [norm-fn name]
   (-> name
-      ;remove-periods
+      remove-periods
       norm-fn
       st/trim
       st/lower-case
@@ -120,3 +113,4 @@
    (spit (str "avail-" proj "-" pos ".csv") (reduce #(str %1 "\n" (apply str (interpose "," %2))) "" (generate-avail proj pos))))
 
 (spit-avail "zips" "pitchers")
+;(generate-draft-rounds)
