@@ -1,5 +1,4 @@
-callback(
-    {
+{
         "Dostoevskian Idiots":44,
         "The Outliers":0.33,
         "The Bail Outs":18.67,
@@ -19,4 +18,3 @@ callback(
         "Necessarily Possible":-15.33,
         "The Amazin Ukrainian":0
     }
-);
