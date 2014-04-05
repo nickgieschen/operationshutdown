@@ -1,4 +1,4 @@
-{
+callback({
         "Dostoevskian Idiots":44,
         "The Outliers":0.33,
         "The Bail Outs":18.67,
@@ -17,4 +17,4 @@
         "Mendoza Line":-9,
         "Necessarily Possible":-15.33,
         "The Amazin Ukrainian":0
-    }
+    });
