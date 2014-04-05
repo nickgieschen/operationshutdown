@@ -1,0 +1,10 @@
+{
+    "name": "ScoresUpdater",
+    "version": "1.2.0",
+    "description": "Updates Operation Shutdown 2014 scores",
+    "creator": "Nick Gieschen",
+    "content_scripts": [
+        "scores-updater.js"
+    ]
+}
+
