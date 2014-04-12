@@ -9,7 +9,7 @@
         "Zach Miner Threat":0,
         "Bullfrogs":0,
         "Hoopleheads":-0.67,
-        "Clement St. Massive":-1,
+        "Clement St. Massive":-8,
         "Big Inning CornKings":-2,
         "Quantum Fastball":-2,
         "SNK Crushers":-6,
