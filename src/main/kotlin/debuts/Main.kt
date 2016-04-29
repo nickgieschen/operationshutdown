@@ -79,6 +79,8 @@ data class YahooPlayer(val name: String, val first: String, val last: String, va
 // TODO easy processed and stash views
 fun main(args: Array<String>) {
 
+    println("hi")
+    
     cmd = args[0]
 
     logName = "logs/$cmd-${SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().time)}"
@@ -86,6 +88,7 @@ fun main(args: Array<String>) {
     val fh = FileHandler(logName)
     logger.addHandler(fh)
     fh.formatter = SimpleFormatter()
+
 
     when (cmd) {
         "addtostash" -> addPlayersToStash()
@@ -109,7 +112,6 @@ fun sendResults(message: String) {
     formData.add("subject", "debuts $cmd - $cmd-${SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().time)}")
     formData.add("text", message)
     webResource.type(MediaType.APPLICATION_FORM_URLENCODED).post(ClientResponse::class.java, formData)
-    println(message)
 }
 
 fun log(message: String, player: Any? = null, e: Exception? = null) {
