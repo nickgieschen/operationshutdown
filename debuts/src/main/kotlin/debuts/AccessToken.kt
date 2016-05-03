@@ -1,27 +1,30 @@
 package yahooFacade
 
+import com.amazonaws.auth.BasicAWSCredentials
+import com.amazonaws.services.s3.AmazonS3Client
+import com.amazonaws.services.s3.model.AmazonS3Exception
+import com.amazonaws.services.s3.model.GetObjectRequest
+import com.amazonaws.services.s3.model.PutObjectRequest
 import com.github.scribejava.apis.YahooApi
 import com.github.scribejava.core.builder.ServiceBuilder
 import com.github.scribejava.core.model.OAuth1AccessToken
 import com.github.scribejava.core.model.OAuthConstants
 import com.github.scribejava.core.model.OAuthRequest
 import com.github.scribejava.core.model.Verb
+import java.io.InputStreamReader
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.*
+import debuts.awsCredentials
+import debuts.awsBucketName
+
+//val awsCredentials = BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY_ID"), System.getenv("AWS_SECRET_ACCESS_KEY"))
+//val awsBucketName = "operationshutdown-debuts"
 
 private var accessToken: AccessToken? = null
-
-//val clientID = "dj0yJmk9ekRuV2FJN29Rb3VBJmQ9WVdrOVRXRjBkMVIxTm1zbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD01ZQ--"
 val clientID = "dj0yJmk9M2cxa2FoSTZsczhGJmQ9WVdrOU5raDZiMVpOTkcwbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD1hMw--"
-//val clientSecret = "9c2f03d622f3708b93b5c8b1cf61bb62e332359b"
 val clientSecret = "17c8a5f104f2fb99a25b5dd963f224af48952fe3"
-
 val accessTokenPath = Paths.get("./access-token-$clientID")
-
-val domainPart = "http://fantasysports.yahooapis.com/fantasy/v2/"
-val leaugePart = "league/mlb.l.25371"
-
 val service = ServiceBuilder()
         .apiKey(clientID)
         .apiSecret(clientSecret)
@@ -67,13 +70,15 @@ fun sendRequest(verb: Verb, url: String, payload: String? = null): String? {
 
 fun getAccessToken(): OAuth1AccessToken? {
 
+
     // If token is in memory use it
     if (accessToken != null) {
         return accessToken
     }
 
     // If not in memory try to get it from disk
-    if (readTokenFromDisk()) {
+    if (readTokenFromS3()) {
+        println("Getting access token from S3")
         return accessToken
     }
 
@@ -108,7 +113,7 @@ fun refreshToken(): Boolean {
         val response = request.send()
 		if (response.isSuccessful) {
             AccessToken(service.api.accessTokenExtractor.extract(response.body)).let {
-                Files.write(accessTokenPath, listOf(it.token, it.tokenSecret, it.sessionHandle))
+                sendTokenToS3(it)
                 accessToken = it
             }
             return true
@@ -121,12 +126,24 @@ fun refreshToken(): Boolean {
     }
 }
 
-fun readTokenFromDisk(): Boolean {
-    if (Files.exists(accessTokenPath)) {
-        accessToken = AccessToken(Files.readAllLines(accessTokenPath))
+fun sendTokenToS3(accessToken: AccessToken) {
+    Files.write(accessTokenPath, listOf(accessToken.token, accessToken.tokenSecret, accessToken.sessionHandle))
+    val s3Client = AmazonS3Client(awsCredentials)
+    s3Client.putObject(PutObjectRequest(awsBucketName, "yahooAccessToken", accessTokenPath.toFile()))
+}
+
+fun readTokenFromS3(): Boolean {
+    try {
+        val s3Client = AmazonS3Client(awsCredentials)
+        val obj = s3Client.getObject(GetObjectRequest(awsBucketName, "yahooAccessToken"))
+        accessToken = AccessToken(InputStreamReader(obj.objectContent).buffered().use { it.readLines() })
         return true
-    } else {
-        return false
+    } catch (e:AmazonS3Exception){
+        if (e.errorCode.equals("NoSuchKey")){
+            return false
+        } else {
+            throw e
+        }
     }
 }
 
@@ -135,8 +152,9 @@ fun getNewToken(): Boolean {
     println("Paste the response from this link to create a new access token:")
     println(service.getAuthorizationUrl(requestToken))
     val oAuthVerifier = Scanner(System.`in`).nextLine()
+    println("Thanks! Getting auth token")
     AccessToken(service.getAccessToken(requestToken, oAuthVerifier)).let {
-        Files.write(accessTokenPath, listOf(it.token, it.tokenSecret, it.sessionHandle))
+        sendTokenToS3(it)
         accessToken = it
     }
     return true

@@ -35,7 +35,9 @@
                   24 19
                   25 20})
 
-(defn load-majl-rosters [] (-> "rosters.csv" io/reader csv/parse-csv))
+;(defn load-majl-rosters [] (-> "rosters.csv" io/reader csv/parse-csv {:delimiter \;}))
+
+(defn load-majl-rosters [] (csv/parse-csv (io/reader "rosters.csv") :delimiter \; ))
 
 (defn load-draft [] (-> "draft.csv" io/reader csv/parse-csv))
 
@@ -52,6 +54,7 @@
                                (recur (rest draft) (inc round-number) next-res))))))
 
 (defn unspanishfy [name] (-> name
+                             (st/replace "í" "i")
                              (st/replace "í" "i")
                              (st/replace "ó" "o")
                              (st/replace "é" "e")
@@ -107,10 +110,12 @@
   (let [keepers (get-all-kept)
         players (load-all-players proj pos)]
        (remove (fn [player-data]
-                   (some #(= %1 (norm-name identity (first player-data))) keepers)) players)))
+                   (some #(= (norm-name identity %1) (norm-name identity (get player-data 4))) keepers)) players)))
 
 (defn spit-avail [proj pos]
-   (spit (str "avail-" proj "-" pos ".csv") (reduce #(str %1 "\n" (apply str (interpose "," %2))) "" (generate-avail proj pos))))
+  (spit (str "avail-" proj "-" pos ".csv") (reduce #(str %1 "\n" (apply str (interpose "," %2))) "" (generate-avail proj pos))))
 
-(spit-avail "zips" "pitchers")
+;(spit-avail "pecota" "pitchers")
 ;(generate-draft-rounds)
+
+

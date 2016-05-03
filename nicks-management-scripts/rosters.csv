@@ -1,507 +1,432 @@
-T: SNK Crushers,
-Jason Castro,(Hou - C)
-Joey Votto,(Cin - 1B)
-Anthony Rendón,"(Was - 2B,3B)"
-Hanley Ramírez,"(LAD - 3B,SS)"
-Didi Gregorius,(Ari - SS)
-Michael Saunders,(Sea - CF)
-Ben Zobrist,"(TB - 2B,SS,OF)"
-Darin Ruf,"(Phi - 1B,OF)"
-Michael Morse,"(Bal - 1B,OF)"
-Mike Leake,(Cin - SP)
-Chris Rusin,(ChC - SP)
-Kyle Drabek,(Tor - SP)
-Roy Oswalt,"(Col - SP,RP)"
-Joe Kelly,"(StL - SP,RP)"
-Carlos Carrasco,"(Cle - SP,RP)"
-Alex Wood,"(Atl - SP,RP)"
-Kevin Gausman,"(Bal - SP,RP)"
-Dustin McGowan,"(Tor - SP,RP)"
-Matt Adams,(StL - 1B)
-Daniel Nava,"(Bos - 1B,OF)"
-Brandon Belt,(SF - 1B)
-Starling Marte,(Pit - CF)
-Marcell Ozuna,(Mia - CF)
-Sonny Gray,"(Oak - SP,RP)"
-Yordano Ventura,(KC - SP)
-T: Hoopleheads,
-Ryan Doumit,"(Min - C,OF)"
-Justin Smoak,(Sea - 1B)
-Josh Rutledge,"(Col - 2B,SS)"
-Junior Lake,"(ChC - 3B,CF)"
-J.J. Hardy,(Bal - SS)
-Yoenis Céspedes,(Oak - CF)
-Jay Bruce,(Cin - OF)
-Curtis Granderson,(NYY - CF)
-Will Venable,(SD - CF)
-Homer Bailey,(Cin - SP)
-Ian Kennedy,(SD - SP)
-Zack Wheeler,(NYM - SP)
-Martín Pérez,"(Tex - SP,RP)"
-Yusmeiro Petit,(SF - SP)
-Kenley Jansen,(LAD - RP)
-Danny Farquhar,(Sea - RP)
-Michael Wacha,"(StL - SP,RP)"
-Jason Grilli,(Pit - RP)
-Marco Scutaro,"(SF - 2B,3B,SS)"
-Lonnie Chisenhall,(Cle - 3B)
-Kole Calhoun,(LAA - OF)
-Álex Ávila,(Det - C)
-Chris Owings,(Ari - SS)
-Erasmo Ramírez,"(Sea - SP,RP)"
-Vinnie Pestano,(Cle - RP)
-Brandon Morrow,(Tor - SP)
-T: Dostoevskian Idiots,
-Víctor Martínez,"(Det - C,1B)"
-Brandon Moss,"(Oak - 1B,OF)"
-Jason Kipnis,(Cle - 2B)
-Miguel Cabrera,(Det - 3B)
-Martín Prado,"(Ari - 2B,3B,SS,OF)"
-Mike Trout,(LAA - CF)
-Coco Crisp,(Oak - CF)
-Alex Gordon,(KC - OF)
-Yasiel Puig,(LAD - CF)
-Jon Lester,(Bos - SP)
-Hyun-Jin Ryu,(LAD - SP)
-Bartolo Colón,(Oak - SP)
-Rick Porcello,(Det - SP)
-Scott Kazmir,(Cle - SP)
-Brett Oberholtzer,"(Hou - SP,RP)"
-Hisashi Iwakuma,"(Sea - SP,RP)"
-David Carpenter,(Atl - RP)
-Eric Stults,"(SD - SP,RP)"
-Allen Craig,"(StL - 1B,OF)"
-Derek Norris,(Oak - C)
-Matt Kemp,(LAD - CF)
-Danny Valencia,(Bal - 3B)
-José Bautista,(Tor - OF)
-Joaquín Benoit,(Det - RP)
-Will Smith,"(KC - SP,RP)"
-Jeff Samardzija,(ChC - SP)
-Felipe Paulino,(KC - SP)
-T: Ken Phelps All Stars,
-Matt Wieters,(Bal - C)
-Billy Butler,(KC - 1B)
-Brandon Phillips,(Cin - 2B)
-Mark Trumbo,"(LAA - 1B,3B,OF)"
-Alexei Ramírez,(CWS - SS)
-Josh Hamilton,(LAA - CF)
-Michael Cuddyer,"(Col - 1B,OF)"
-Nate McLouth,(Bal - CF)
-David Ortiz,(Bos - 1B)
-Adam Wainwright,(StL - SP)
-Hiroki Kuroda,(NYY - SP)
-Paul Maholm,(Atl - SP)
-Jason Vargas,(LAA - SP)
-Jarrod Parker,(Oak - SP)
-Lance Lynn,"(StL - SP,RP)"
-Junichi Tazawa,(Bos - RP)
-Luke Hochevar,"(KC - SP,RP)"
-Jim Henderson,(Mil - RP)
-Carl Crawford,(LAD - OF)
-Brandon Crawford,(SF - SS)
-Chris Carter,"(Hou - 1B,OF)"
-Russell Martin,(Pit - C)
-Johnny Giavotella,(KC - 2B)
-Darren O'Day,(Bal - RP)
-Scott Baker,(ChC - SP)
-Chad Gaudin,"(SF - SP,RP)"
-Wandy Rodríguez,(Pit - SP)
-Cory Luebke,(SD - SP)
-T: Zach Miner Threat,
-Salvador Pérez,(KC - C)
-Anthony Rizzo,(ChC - 1B)
-Robinson Canó,(NYY - 2B)
-Brett Lawrie,"(Tor - 2B,3B)"
-José Reyes,(Tor - SS)
-Bryce Harper,(Was - CF)
-Marlon Byrd,(Pit - CF)
-Matt Holliday,(StL - OF)
-Andre Ethier,(LAD - CF)
-Max Scherzer,(Det - SP)
-Anibal Sánchez,(Det - SP)
-Alex Cobb,(TB - SP)
-Justin Verlander,(Det - SP)
-Matt Moore,(TB - SP)
-Drew Smyly,"(Det - SP,RP)"
-Sean Doolittle,(Oak - RP)
-Mark Melancon,(Pit - RP)
-Trevor Rosenthal,(StL - RP)
-Andrelton Simmons,(Atl - SS)
-Jesús Montero,(Sea - C)
-Wilmer Flores,(NYM - 3B)
-Andrew Lambo,(Pit - OF)
-Joe Mauer,"(Min - C,1B)"
-David Wright,(NYM - 3B)
-C.J. Wilson,(LAA - SP)
-Matt Garza,(Tex - SP)
-Ryan Vogelsong,(SF - SP)
-Brett Anderson,"(Oak - SP,RP)"
-T: Chibe's Crushers '13,
-Yadier Molina,(StL - C)
-Matt Carpenter,"(StL - 1B,2B,3B,OF)"
-Jed Lowrie,"(Oak - 2B,SS)"
-David Freese,(StL - 3B)
-Eduardo Núñez,"(NYY - 3B,SS)"
-Carlos Gómez,(Mil - CF)
-Michael Bourn,(Cle - CF)
-Norichika Aoki,(Mil - CF)
-Chris Johnson,"(Atl - 1B,3B)"
-Matt Harvey,(NYM - SP)
-Jeff Locke,(Pit - SP)
-Samuel Deduno,(Min - SP)
-José Quintana,(CWS - SP)
-Tommy Hunter,"(Bal - SP,RP)"
-Rex Brothers,(Col - RP)
-Andrew Cashner,"(SD - SP,RP)"
-Luke Gregerson,(SD - RP)
-Ernesto Frieri,(LAA - RP)
-Asdrubal Cabrera,(Cle - SS)
-A.J. Pierzynski,(Tex - C)
-Juan Francisco,"(Mil - 1B,3B)"
-Robbie Grossman,(Hou - CF)
-Rickie Weeks,(Mil - 2B)
-Héctor Santiago,"(CWS - SP,RP)"
-Zach McAllister,(Cle - SP)
-Sergio Romo,(SF - RP)
-T: The Bail Outs,
-Yan Gomes,"(Cle - C,1B,3B)"
-Prince Fielder,(Det - 1B)
-Nick Franklin,"(Sea - 2B,SS)"
-Josh Donaldson,(Oak - 3B)
-Troy Tulowitzki,(Col - SS)
-Denard Span,(Was - CF)
-Carlos Beltrán,(StL - CF)
-Giancarlo Stanton,(Mia - OF)
-Wilson Ramos,(Was - C)
-Clayton Kershaw,(LAD - SP)
-Jordan Zimmermann,(Was - SP)
-Cliff Lee,(Phi - SP)
-Chris Tillman,(Bal - SP)
-David Price,(TB - SP)
-Tyson Ross,"(SD - SP,RP)"
-Alexi Ogando,"(Tex - SP,RP)"
-Tanner Roark,"(Was - SP,RP)"
-Erik Johnson,"(CWS - SP,RP)"
-Kyle Seager,"(Sea - 2B,3B)"
-Juan Lagares,(NYM - CF)
-Jacoby Ellsbury,(Bos - CF)
-Ike Davis,(NYM - 1B)
-Gio González,(Was - SP)
-Tyler Chatwood,"(Col - SP,RP)"
-Craig Kimbrel,(Atl - RP)
-Greg Holland,(KC - RP)
-Danny Duffy,(KC - SP)
-Taylor Jordan,(Was - SP)
-T: The Amazin Ukrainian,
-Kendrys Morales,(Sea - 1B)
-Neil Walker,(Pit - 2B)
-Todd Frazier,"(Cin - 1B,3B,OF)"
-Ian Desmond,(Was - SS)
-Eric Young,(NYM - CF)
-Brett Gardner,(NYY - CF)
-Dayan Viciedo,(CWS - OF)
-Justin Masterson,(Cle - SP)
-Bud Norris,(Bal - SP)
-Derek Holland,(Tex - SP)
-Kyle Lohse,(Mil - SP)
-Neftali Feliz,"(Tex - SP,RP)"
-Bruce Rondon,(Det - RP)
-Carlos Martínez,(StL - RP)
-Tyler Thornburg,"(Mil - SP,RP)"
-Nelson Cruz,(Tex - OF)
-Albert Pujols,(LAA - 1B)
-Derek Dietrich,(Mia - 2B)
-Kaleb Cowart,(LAA - 3B)
-Jonathan Schoop,(Bal - SS)
-Mark Teixeira,(NYY - 1B)
-Kyle Gibson,(Min - SP)
-Michael Pineda,(NYY - SP)
-Ethan Martin,"(Phi - SP,RP)"
-Jenrry Mejía,(NYM - SP)
-Jimmy Nelson,(Mil - RP)
-Brandon Beachy,(Atl - SP)
-Matt Harrison,(Tex - SP)
-T: Big Inning CornKings,
-Jonathan Lucroy,"(Mil - C,1B)"
-Freddie Freeman,(Atl - 1B)
-José Altuve,(Hou - 2B)
-Manny Machado,(Bal - 3B)
-Brad Miller,"(Sea - 2B,SS)"
-Shane Victorino,(Bos - CF)
-Wil Myers,(TB - CF)
-Leonys Martín,(Tex - CF)
-Pablo Sandoval,(SF - 3B)
-Tim Lincecum,(SF - SP)
-Dan Straily,(Oak - SP)
-A.J. Griffin,(Oak - SP)
-Danny Salazar,(Cle - SP)
-Corey Kluber,(Cle - SP)
-Joe Nathan,(Tex - RP)
-Patrick Corbin,"(Ari - SP,RP)"
-Francisco Liriano,"(Pit - SP,RP)"
-Garrett Richards,"(LAA - SP,RP)"
-Jedd Gyorko,"(SD - 2B,3B)"
-Jean Segura,(Mil - SS)
-Evan Gattis,"(Atl - C,OF)"
-Mike Zunino,(Sea - C)
-Marcus Semien,"(CWS - 2B,3B,SS)"
-Carlos Quentin,(SD - OF)
-James Shields,(KC - SP)
-Tommy Milone,(Oak - SP)
-Johnny Cueto,(Cin - SP)
-Jaime García,(StL - SP)
-T: Clement St. Massive,
-Kurt Suzuki,(Oak - C)
-Adam LaRoche,(Was - 1B)
-Kelly Johnson,"(TB - 2B,3B,OF)"
-Adrián Béltre,(Tex - 3B)
-Erick Aybar,(LAA - SS)
-Shin-Soo Choo,(Cin - CF)
-Ryan Braun,(Mil - OF)
-Vernon Wells,(NYY - CF)
-Jayson Werth,(Was - CF)
-Matt Cain,(SF - SP)
-R.A. Dickey,(Tor - SP)
-Doug Fister,(Det - SP)
-Andy Pettitte,(NYY - SP)
-John Lackey,(Bos - SP)
-Grant Balfour,(Oak - RP)
-Jim Johnson,(Bal - RP)
-Michael Brantley,(Cle - CF)
-Alcides Escobar,(KC - SS)
-Eric Hosmer,(KC - 1B)
-Hank Conger,(LAA - C)
-Gordon Beckham,(CWS - 2B)
-Dillon Gee,(NYM - SP)
-Justin De Fratus,(Phi - RP)
-Mike Adams,(Phi - RP)
-Alfredo Figaro,"(Mil - SP,RP)"
-T: Mendoza Line,
-Josh Phegley,(CWS - C)
-Daniel Murphy,"(NYM - 1B,2B)"
-Scooter Gennett,"(Mil - 2B,SS)"
-Michael Young,"(LAD - 1B,2B,3B)"
-José Iglesias,"(Det - 3B,SS)"
-Avisail García,(CWS - CF)
-Álex Ríos,(Tex - OF)
-Andy Dirks,(Det - OF)
-Torii Hunter,(Det - OF)
-Felix Doubront,(Bos - SP)
-Phil Hughes,(NYY - SP)
-Ryan Dempster,(Bos - SP)
-Iván Nova,(NYY - SP)
-Tyler Skaggs,(Ari - SP)
-Josh Collmenter,"(Ari - SP,RP)"
-Brett Cecil,"(Tor - SP,RP)"
-Tom Gorzelanny,"(Mil - SP,RP)"
-Rafael Betancourt,(Col - RP)
-Josh Reddick,(Oak - CF)
-Joey Terdoslavich,"(Atl - 1B,OF)"
-Will Middlebrooks,(Bos - 3B)
-Matt Davidson,(Ari - 3B)
-Efrén Navarro,(LAA - 1B)
-Corey Hart,"(Mil - 1B,OF)"
-Allen Webster,(Bos - SP)
-Alex Meyer,(Min - SP)
-T: Maya's Mysteries,
-Buster Posey,"(SF - C,1B)"
-Adrián González,"(LAD - 1B,OF)"
-Aaron Hill,(Ari - 2B)
-Evan Longoria,(TB - 3B)
-Jimmy Rollins,(Phi - SS)
-Adam Jones,(Bal - CF)
-Justin Upton,(Atl - OF)
-Ryan Ludwick,(Cin - OF)
-Álex Rodríguez,(NYY - 3B)
-Félix Hernández,(Sea - SP)
-Stephen Strasburg,(Was - SP)
-Miguel González,(Bal - SP)
-Gerrit Cole,(Pit - SP)
-Clay Buchholz,(Bos - SP)
-Aroldis Chapman,(Cin - RP)
-Scott Feldman,"(Bal - SP,RP)"
-Marco Estrada,"(Mil - SP,RP)"
-Jake Arrieta,"(ChC - SP,RP)"
-Delmon Young,(TB - OF)
-Jonathan Singleton,(Hou - OF)
-Cody Ross,(Ari - OF)
-Chris Capuano,(LAD - SP)
-Carlos Villanueva,"(ChC - SP,RP)"
-Brian Matusz,"(Bal - SP,RP)"
-Burch Smith,(SD - SP)
-Jason Hammel,(Bal - SP)
-Kevin Slowey,"(Mia - SP,RP)"
-Colby Lewis,(Tex - SP)
-T: Necessarily Possible,
-Jarrod Saltalamacchia,(Bos - C)
-Tommy Medica,(SD - 1B)
-Chase Utley,(Phi - 2B)
-Ryan Zimmerman,(Was - 3B)
-Yunel Escobar,(TB - SS)
-Jon Jay,(StL - CF)
-Alfonso Soriano,(NYY - OF)
-Oswaldo Arcia,(Min - OF)
-Cody Asche,(Phi - 3B)
-Chris Sale,(CWS - SP)
-Travis Wood,(ChC - SP)
-Julio Teherán,(Atl - SP)
-Randall Delgado,(Ari - SP)
-Jonathon Niese,(NYM - SP)
-Kris Medlen,"(Atl - SP,RP)"
-Addison Reed,(CWS - RP)
-Kelvin Herrera,(KC - RP)
-Tony Cingrani,"(Cin - SP,RP)"
-Henry Urrutia,(Bal - OF)
-Logan Forsythe,"(SD - 2B,3B,SS,OF)"
-Tyler Colvin,"(Col - 1B,CF)"
-Kolten Wong,(StL - 2B)
-Grant Green,"(LAA - 2B,SS)"
-Ben Revere,(Phi - CF)
-Chad Bettis,"(Col - SP,RP)"
-Liam Hendriks,(Min - SP)
-Josh Johnson,(Tor - SP)
-T: Mike Kingery,
-Devin Mesoraco,(Cin - C)
-Paul Goldschmidt,(Ari - 1B)
-Dustin Pedroia,(Bos - 2B)
-Pedro Alvarez,(Pit - 3B)
-Elvis Andrus,(Tex - SS)
-Nate Schierholtz,(ChC - CF)
-Franklin Gutiérrez,(Sea - CF)
-Josh Willingham,(Min - OF)
-Mike Moustakas,(KC - 3B)
-CC Sabathia,(NYY - SP)
-Wily Peralta,(Mil - SP)
-Nathan Eovaldi,(Mia - SP)
-Trevor Cahill,(Ari - SP)
-Ubaldo Jiménez,(Cle - SP)
-Rafael Soriano,(Was - RP)
-Wade Davis,"(KC - SP,RP)"
-Joel Peralta,(TB - RP)
-Shelby Miller,"(StL - SP,RP)"
-J.P. Arencibia,(Tor - C)
-Scott Hairston,(Was - CF)
-Marwin González,"(Hou - 2B,3B,SS)"
-Cameron Maybin,(SD - CF)
-Carlos González,(Col - OF)
-Ryan Howard,(Phi - 1B)
-Jacob Turner,(Mia - SP)
-Jeremy Hellickson,(TB - SP)
-Tim Hudson,(Atl - SP)
-Chad Billingsley,(LAD - SP)
-T: Bullfrogs,
-Wilin Rosario,(Col - C)
-Dustin Ackley,"(Sea - 1B,2B,CF)"
-Omar Infante,(Det - 2B)
-Juan Uribe,(LAD - 3B)
-Stephen Drew,(Bos - SS)
-Austin Jackson,(Det - CF)
-Gerardo Parra,(Ari - CF)
-Desmond Jennings,(TB - CF)
-Raúl Ibañez,(Sea - OF)
-Mike Minor,(Atl - SP)
-Ricky Nolasco,(LAD - SP)
-Bronson Arroyo,(Cin - SP)
-Anthony Swarzak,"(Min - SP,RP)"
-Adam Warren,"(NYY - SP,RP)"
-Tyler Clippard,(Was - RP)
-Mariano Rivera,(NYY - RP)
-Jonathan Papelbon,(Phi - RP)
-Álex Torres,(TB - RP)
-Ryan Raburn,"(Cle - 2B,OF)"
-James Loney,(TB - 1B)
-Brian Roberts,(Bal - 2B)
-Dexter Fowler,(Col - CF)
-Yonder Alonso,(SD - 1B)
-Edwin Encarnación,"(Tor - 1B,3B)"
-Vin Mazzaro,"(Pit - SP,RP)"
-Justin Wilson,(Pit - RP)
-Jason Marquis,(SD - SP)
-Jesse Crain,(TB - RP)
-T: The Outliers,
-Mike Napoli,"(Bos - C,1B)"
-Justin Morneau,(Pit - 1B)
-Ian Kinsler,(Tex - 2B)
-Alberto Callaspo,"(Oak - 2B,3B)"
-Jurickson Profar,"(Tex - 2B,3B,SS)"
-Andrew McCutchen,(Pit - CF)
-Nick Swisher,"(Cle - 1B,OF)"
-Alejandro De Aza,(CWS - CF)
-Aramis Ramírez,(Mil - 3B)
-Wade Miley,(Ari - SP)
-Jorge De La Rosa,(Col - SP)
-Jhoulys Chacin,(Col - SP)
-Bruce Chen,"(KC - SP,RP)"
-Jake Peavy,(Bos - SP)
-Glen Perkins,(Min - RP)
-David Robertson,(NYY - RP)
-Edward Mujica,(StL - RP)
-Carlos Mármol,(LAD - RP)
-Elliot Johnson,"(Atl - 2B,3B,SS,OF)"
-Yuniesky Betancourt,"(Mil - 1B,2B,3B)"
-Dee Gordon,(LAD - SS)
-Ryan Lavarnway,(Bos - C)
-Hiroyuki Nakajima,(Oak - SS)
-Jason Heyward,(Atl - CF)
-Edwin Jackson,(ChC - SP)
-Kyuji Fujikawa,(ChC - RP)
-Jeff Karstens,(Pit - SP)
-Alex White,(Hou - SP)
-T: Peaches,
-Brian McCann,(Atl - C)
-Chris Davis,"(Bal - 1B,OF)"
-Howie Kendrick,(LAA - 2B)
-Chase Headley,(SD - 3B)
-Brian Dozier,"(Min - 2B,SS)"
-Corey Dickerson,(Col - CF)
-Hunter Pence,(SF - OF)
-Khris Davis,(Mil - OF)
-Adam Lind,(Tor - 1B)
-Cole Hamels,(Phi - SP)
-Mat Latos,(Cin - SP)
-Jered Weaver,(LAA - SP)
-Zack Greinke,(LAD - SP)
-A.J. Burnett,(Pit - SP)
-Koji Uehara,(Bos - RP)
-Fernando Rodney,(TB - RP)
-Chris Withrow,(LAD - RP)
-Huston Street,(SD - RP)
-Matt Domínguez,(Hou - 3B)
-Adam Dunn,"(CWS - 1B,OF)"
-Matt Joyce,(TB - OF)
-Billy Hamilton,(Cin - SS)
-Yasmani Grandal,(SD - C)
-Ervin Santana,(KC - SP)
-Wei-Yin Chen,(Bal - SP)
-John Danks,(CWS - SP)
-Sean Marshall,(Cin - RP)
-T: Quantum Fastball,
-Carlos Santana,"(Cle - C,1B)"
-John Mayberry,"(Phi - 1B,CF)"
-Everth Cabrera,"(SD - 2B,SS)"
-Chris Nelson,"(LAA - 2B,3B)"
-Starlin Castro,(ChC - SS)
-Colby Rasmus,(Tor - CF)
-Domonic Brown,(Phi - OF)
-Madison Bumgarner,(SF - SP)
-Yu Darvish,(Tex - SP)
-Edinson Vólquez,(LAD - SP)
-Blake Beavan,"(Sea - SP,RP)"
-José Fernández,(Mia - SP)
-John Axford,(StL - RP)
-Al Alburquerque,(Det - RP)
-Anthony Bass,"(SD - SP,RP)"
-Kyle Kendrick,"(Phi - SP,RP)"
-Brett Jackson,(ChC - CF)
-Christian Yelich,(Mia - CF)
-Jemile Weeks,(Oak - 2B)
-Logan Morrison,"(Mia - 1B,OF)"
-Adam Eaton,(Ari - CF)
-Peter Bourjos,(LAA - CF)
-Melky Cabrera,(Tor - OF)
-Daniel Bard,"(ChC - SP,RP)"
-Chris Archer,(TB - SP)
-Rubby De La Rosa,(Bos - RP)
-Henderson Álvarez,(Mia - SP)
-Nick Tepesch,(Tex - SP)
+T: SNK Crushers
+Francisco Cervelli; Pit - C
+Joey Votto; Cin - 1B
+Anthony Rendón; Was - 2B,3B
+Yasmany Tomás; Ari - 3B,OF
+Ben Zobrist; ChC - 2B,OF
+Starling Marte; Pit - CF
+Justin Upton; Det - OF
+Grégory Polanco; Pit - OF
+Brandon Belt; SF - 1B,OF
+Wilmer Difo; Was - 2B
+Steven Souza Jr.; TB - OF
+Joe Panik; SF - 2B
+Marcell Ozuna; Mia - CF
+Max Kepler; Min - OF
+Sonny Gray; Oak - SP
+Corey Kluber; Cle - SP
+Yordano Ventura; KC - SP
+Jordan Zimmermann; Det - SP
+Alex Wood; LAD - SP
+Dellin Betances; NYY - RP
+Carlos Rodon; CWS - SP
+Kevin Gausman; Bal - SP,RP
+Marcus Stroman; Tor - SP
+Joe Kelly; Bos - SP
+Brandon Finnegan; Cin - SP,RP
+Hanley Ramírez; Bos - OF
+Kiké Hernández; LAD - 2B,SS,CF
+Anibal Sánchez; Det - SP
+T: Zach Miner Threat
+Salvador Pérez; KC - C
+José Abreu; CWS - 1B
+Rougned Odor; Tex - 2B
+Matt Duffy; SF - 2B,3B
+Miguel Sano; Min - 3B
+Bryce Harper; Was - CF
+J.D. Martínez; Det - OF
+Aaron Altherr; Phi - CF
+Anthony Rizzo; ChC - 1B
+Nick Castellanos; Det - 3B
+Addison Russell; ChC - 2B,SS
+Michael A. Taylor; Was - CF
+Héctor Olivera; Atl - 3B
+Mike Zunino; Sea - C
+Mikie Mahtook; TB - CF
+Scott Kazmir; LAD - SP
+Eduardo Rodríguez; Bos - SP
+Joe Ross; Was - SP
+Justin Verlander; Det - SP
+Matt Moore; TB - SP
+Erasmo Ramírez; TB - SP,RP
+Carson Smith; Bos - RP
+Chris Bassitt; Oak - SP,RP
+Nathan Karns; Sea - SP
+Jesse Hahn; Oak - SP
+T: Big Inning CornKings
+Jonathan Lucroy; Mil - C,1B
+Freddie Freeman; Atl - 1B
+Logan Forsythe; TB - 1B,2B
+Manny Machado; Bal - 3B,SS
+Brad Miller; TB - 2B,SS,CF
+Byron Buxton; Min - CF
+Rusney Castillo; Bos - OF
+Wil Myers; SD - 1B,CF
+Travis Shaw; Bos - 1B,3B
+Stephen Piscotty; StL - 1B,OF
+Billy Burns; Oak - CF
+Jean Segura; Ari - SS
+Matt Adams; StL - 1B
+Dalton Pompey; Tor - CF
+Matt Holliday; StL - OF
+Danny Salazar; Cle - SP
+Garrett Richards; LAA - SP
+Wade Miley; Sea - SP
+Patrick Corbin; Ari - SP
+Johnny Cueto; SF - SP
+Anthony DeSclafani; Cin - SP
+Wade Davis; KC - RP
+Kris Medlen; KC - SP,RP
+Frankie Montás; LAD - RP
+Chi Chi González; Tex - SP
+T: Dostoevskian Idiots
+Derek Norris; SD - C,1B
+Greg Bird; NYY - 1B
+Jason Kipnis; Cle - 2B
+Miguel Cabrera; Det - 1B
+Javier Báez; ChC - 2B,3B,SS
+Mike Trout; LAA - CF
+José Bautista; Tor - OF
+Jarrett Parker; SF - OF
+David Wright; NYM - 3B
+Marcus Semien; Oak - SS
+Mark Canha; Oak - 1B,OF
+Stephen Vogt; Oak - C,1B
+Jon Lester; ChC - SP
+Max Scherzer; Was - SP
+Hisashi Iwakuma; Sea - SP
+Jeff Samardzija; SF - SP
+Ervin Santana; Min - SP
+Kenley Jansen; LAD - RP
+Carlos Carrasco; Cle - SP
+Kelvin Herrera; KC - RP
+Cody Allen; Cle - RP
+Masahiro Tanaka; NYY - SP
+Bartolo Colón; NYM - SP
+Zach Britton; Bal - RP
+Yasiel Puig; LAD - OF
+Maikel Franco; Phi - 3B
+Hyun-jin Ryu; LAD - SP
+T: The Bail Outs
+Yan Gomes; Cle - C
+Edwin Encarnación; Tor - 1B
+Eddie Rosario; Min - OF
+Josh Donaldson; Tor - 3B
+Francisco Lindor; Cle - SS
+A.J. Pollock; Ari - CF
+David Peralta; Ari - OF
+George Springer; Hou - CF
+Randal Grichuk; StL - CF
+Wilmer Flores; NYM - 2B,SS
+Billy Butler; Oak - 1B
+Jackie Bradley Jr.; Bos - CF
+Clayton Kershaw; LAD - SP
+David Price; Bos - SP
+Jaime García; StL - SP
+Tyson Ross; SD - SP
+Drew Smyly; TB - SP
+Sean Doolittle; Oak - RP
+Adam Conley; Mia - SP
+Jake McGee; Col - RP
+Héctor Rondón; ChC - RP
+Chris Heston; SF - SP
+Collin McHugh; Hou - SP
+John Lamb; Cin - SP
+Jerad Eickhoff; Phi - SP
+Jung-ho Kang; Pit - 3B,SS
+Giancarlo Stanton; Mia - OF
+T: Hoopleheads
+Welington Castillo; Ari - C
+Kendrys Morales; KC - 1B
+Mookie Betts; Bos - CF
+Jace Peterson; Atl - 2B
+Chris Owings; Ari - 2B,SS
+Lorenzo Cain; KC - CF
+Yoenis Céspedes; NYM - CF
+Kole Calhoun; LAA - OF
+Jay Bruce; Cin - OF
+Joey Gallo; Tex - 3B,OF
+Brandon Crawford; SF - SS
+J.T. Realmuto; Mia - C
+Colby Rasmus; Hou - CF
+Steven Moyà; Det - OF
+Michael Wacha; StL - SP
+Jacob deGrom; NYM - SP
+Jake Peavy; SF - SP
+Wei-Yin Chen; Mia - SP
+Rubby De La Rosa; Ari - SP
+Brad Boxberger; TB - RP
+Luis Severino; NYY - SP
+Arquímedes Caminero; Pit - RP
+Joaquín Benoit; Sea - RP
+Jesse Chavez; Tor - SP
+Raisel Iglesias; Cin - SP
+Devin Mesoraco; Cin - C
+Carter Capps; Mia - RP
+Zack Wheeler; NYM - SP
+T: Bullfrongs
+A.J. Pierzynski; Atl - C
+Prince Fielder; Tex - 1B
+DJ LeMahieu; Col - 2B
+Kyle Seager; Sea - 3B
+Justin Turner; LAD - 1B,3B
+Curtis Granderson; NYM - OF
+Kevin Pillar; Tor - CF
+Lucas Duda; NYM - 1B
+Alcides Escobar; KC - SS
+Adeiny Hechavarria; Mia - SS
+Kyle Parker; Col - OF
+Not Active
+Rob Brantly; CWS - C
+Francisco Liriano; Pit - SP
+Andrew Heaney; LAA - SP
+Danny Duffy; KC - SP,RP
+Yusmeiro Petit; Was - RP
+Carlos Villanueva; SD - RP
+Jonathan Papelbon; Was - RP
+Darren O'Day; Bal - RP
+Tony Sipp; Hou - RP
+George Kontos; SF - RP
+Colby Lewis; Tex - SP
+Cody Martin; Sea - RP
+Miguel González; Bal - SP
+T: Clement St. Massive
+Yadier Molina; StL - C
+Eric Hosmer; KC - 1B
+Neil Walker; NYM - 2B
+Adrián Béltre; Tex - 3B
+Erick Aybar; Atl - SS
+Michael Brantley; Cle - CF
+Ryan Braun; Mil - OF
+Denard Span; SF - CF
+Leonys Martín; Sea - CF
+Andrelton Simmons; LAA - SS
+C.J. Cron; LAA - 1B
+R.A. Dickey; Tor - SP
+Taijuan Walker; Sea - SP
+Odrisamer Despaigne; Bal - SP,RP
+Álex Colomé; TB - SP,RP
+Doug Fister; Hou - SP,RP
+Mark Melancon; Pit - RP
+Mike Dunn; Mia - RP
+Travis Wood; ChC - SP,RP
+Vance Worley; Bal - SP,RP
+Mike Bolsinger; LAD - SP
+Jayson Werth; Was - OF
+T: Ken Phelps All Stars
+Matt Wieters; Bal - C
+Mark Trumbo; Bal - 1B,OF
+Asdrubal Cabrera; NYM - SS
+Brett Lawrie; CWS - 2B,3B
+Yunel Escobar; LAA - 3B
+Ender Inciarte; Atl - CF
+Steve Pearce; TB - 1B,2B,OF
+Chris Carter; Mil - 1B
+David Ortiz; Bos - 1B
+Rajai Davis; Cle - CF
+Trayce Thompson; LAD - CF
+Tom Koehler; Mia - SP
+Mike Leake; StL - SP
+Tyler Duffey; Min - SP
+Rick Porcello; Bos - SP
+Robbie Erlin; SD - SP
+Chris Young; KC - SP,RP
+Brett Cecil; Tor - RP
+Adam Warren; ChC - SP,RP
+Glen Perkins; Min - RP
+Luke Hochevar; KC - RP
+Junichi Tazawa; Bos - RP
+Hunter Pence; SF - OF
+Adam Wainwright; StL - SP
+T: The Amazin Ukrainian
+Wilson Ramos; Was - C
+Albert Pujols; LAA - 1B
+Jonathan Schoop; Bal - 2B
+Todd Frazier; CWS - 3B
+Brett Gardner; NYY - CF
+Nelson Cruz; Sea - OF
+Aaron Hicks; NYY - CF
+Derek Dietrich; Mia - 3B,OF
+Brandon Phillips; Cin - 2B
+Tim Beckham; TB - 2B,SS
+Jedd Gyorko; StL - 2B,SS
+Jimmy Nelson; Mil - SP
+Kyle Gibson; Min - SP
+Lance McCullers; Hou - SP
+Michael Pineda; NYY - SP
+Ian Kennedy; KC - SP
+Trevor Rosenthal; StL - RP
+Carlos Martínez; StL - SP
+Héctor Santiago; LAA - SP
+Brandon Beachy; LAD - SP
+Not Active
+Tyler Matzek; Col - SP
+Tyler Thornburg; Mil - RP
+Rich Hill; Oak - SP
+Jorge Soler; ChC - OF
+Henderson Álvarez; Oak - SP
+T: Necessarily Possible
+John Jaso; Pit - OF
+Ryan Howard; Phi - 1B
+Ian Kinsler; Det - 2B
+Cody Asche; Phi - 3B,OF
+Jhonny Peralta; StL - SS
+Anthony Gose; Det - CF
+Brock Holt; Bos - 1B,2B,3B,SS,OF
+Ryan Zimmerman; Was - 1B
+Jimmy Paredes; Bal - 2B
+Carlos Ruiz; Phi - C
+Darin Ruf; Phi - 1B,OF
+Jon Jay; SD - CF
+Jonathon Niese; Pit - SP
+Chris Sale; CWS - SP
+Matt Cain; SF - SP
+Jake Odorizzi; TB - SP
+Noah Syndergaard; NYM - SP
+Ryan Madson; Oak - RP
+Alex Wilson; Det - RP
+Brad Brach; Bal - RP
+Randall Delgado; Ari - RP
+Julio Teherán; Atl - SP
+Brandon Maurer; SD - RP
+T: Maya's Mysteries
+Buster Posey; SF - C,1B
+Justin Bour; Mia - 1B
+José Altuve; Hou - 2B
+Evan Longoria; TB - 3B
+Carlos Correa; Hou - SS
+Adam Jones; Bal - CF
+Carlos Beltrán; NYY - OF
+Kris Bryant; ChC - 3B,OF
+Josh Harrison; Pit - 2B,3B,OF
+Danny Valencia; Oak - 3B,OF
+Ketel Marte; Sea - SS
+Josh Hamilton; Tex - OF
+Félix Hernández; Sea - SP
+Jake Arrieta; ChC - SP
+Gerrit Cole; Pit - SP
+Stephen Strasburg; Was - SP
+John Lackey; ChC - SP
+Aroldis Chapman; NYY - RP
+Tony Watson; Pit - RP
+Zach McAllister; Cle - RP
+Ken Giles; Hou - RP
+Jason Hammel; ChC - SP
+Brett Anderson; LAD - SP
+Tommy Milone; Min - SP
+Archie Bradley; Ari - SP
+T: The Outliers
+Evan Gattis; Hou - OF
+Adrián González; LAD - 1B
+Trevor Plouffe; Min - 1B,3B
+Xander Bogaerts; Bos - SS
+Andrew McCutchen; Pit - CF
+Matt Kemp; SD - OF
+Jason Heyward; ChC - CF
+Mark Teixeira; NYY - 1B
+José Reyes; Col - SS
+Gio González; Was - SP
+Edinson Vólquez; KC - SP
+Ubaldo Jiménez; Bal - SP
+David Robertson; CWS - RP
+Dan Otero; Cle - RP
+Steve Cishek; Sea - RP
+Nick Swisher; Atl - 1B,OF
+Jurickson Profar; Tex - 2B,SS
+T: Chibe's Crushers '13
+Carlos Santana; Cle - 1B
+Brian McCann; NYY - C,1B
+Dee Gordon; Mia - 2B
+Matt Carpenter; StL - 2B,3B
+Elvis Andrus; Tex - SS
+Gerardo Parra; Col - CF
+Carlos Gómez; Hou - CF
+Jacoby Ellsbury; NYY - CF
+Nori Aoki; Sea - OF
+Ben Revere; Was - CF
+Howie Kendrick; LAD - 2B
+Billy Hamilton; Cin - CF
+Yonder Alonso; Oak - 1B
+Andrew Cashner; SD - SP
+Matt Harvey; NYM - SP
+Mike Fiers; Hou - SP
+Lance Lynn; StL - SP
+José Quintana; CWS - SP
+A.J. Ramos; Mia - RP
+Francisco Rodríguez; Det - RP
+Jeurys Familia; NYM - RP
+Michael Blazek; Mil - RP
+Iván Nova; NYY - SP
+Blake Swihart; Bos - C
+T: Mike Kingery
+Russell Martin; Tor - C
+Paul Goldschmidt; Ari - 1B
+Martín Prado; Mia - 2B,3B
+Alexei Ramírez; SD - SS
+Kevin Kiermaier; TB - CF
+Nick Markakis; Atl - OF
+Mitch Moreland; Tex - 1B
+Alex Gordon; KC - OF
+Devon Travis; Tor - 2B
+Mike Moustakas; KC - 3B
+Micah Johnson; LAD - 2B
+Dustin Pedroia; Bos - 2B
+Richie Shaffer; TB - 1B
+Shelby Miller; Ari - SP
+Nathan Eovaldi; NYY - SP
+Wily Peralta; Mil - SP
+J.A. Happ; Tor - SP
+Drew Storen; Tor - RP
+Jason Motte; Col - RP
+Will Harris; Hou - RP
+Roberto Osuna; Tor - RP
+Kendall Graveman; Oak - SP
+Michael Saunders; Tor - OF
+Adam Ottavino; Col - RP
+Jacob Turner; CWS - SP
+T: Mendoza Line
+Chase Headley; NYY - 3B
+Kolten Wong; StL - 2B
+Daniel Murphy; Was - 1B,2B,3B
+José Peraza; Cin - 2B
+Charlie Blackmon; Col - CF
+Avisail García; CWS - OF
+Domingo Santana; Mil - CF
+Jorge Alfaro; Phi - C
+Trevor Bauer; Cle - SP
+Taylor Jungmann; Mil - SP
+Vince Velásquez; Phi - SP,RP
+Erik Johnson; CWS - SP
+Matt Shoemaker; LAA - SP
+Mike Foltynewicz; Atl - SP
+Ariel Peña; Mil - SP
+Robbie Ray; Ari - SP
+Brian Johnson; Bos - SP
+James Paxton; Sea - SP
+Zach Davies; Mil - SP
+Tyler Skaggs; LAA - SP
+T: Quantum Fastball
+Travis d'Arnaud; NYM - C
+Mike Napoli; Cle - 1B,OF
+Robinson Canó; Sea - 2B
+Nolan Arenado; Col - 3B
+Starlin Castro; NYY - 2B,SS
+Joc Pederson; LAD - CF
+Carlos González; Col - OF
+Shin-soo Choo; Tex - OF
+Christian Yelich; Mia - CF
+Adam Eaton; CWS - CF
+Álex Rodríguez; NYY - Util
+Adam Lind; Sea - 1B
+Jesús Montero; Sea - 1B
+Jason Rogers; Pit - 1B
+Chris Archer; TB - SP
+Madison Bumgarner; SF - SP
+Drew Hutchison; Tor - SP
+Clay Buchholz; Bos - SP
+Andrew Miller; NYY - RP
+Addison Reed; NYM - RP
+Aarón Sánchez; Tor - SP,RP
+Fernando Rodney; SD - RP
+Yu Darvish; Tex - SP
+José Fernández; Mia - SP
