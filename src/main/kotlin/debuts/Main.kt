@@ -41,8 +41,8 @@ var cmd = ""
 val logger = Logger.getLogger("debuts")
 var logName: String = ""
 val mailApiKey = "key-3ea1820206278de2b23796653ae96116"
-val awsCredentials = BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY_ID"), System.getenv("AWS_SECRET_ACCESS_KEY"))
-//val awsCredentials = BasicAWSCredentials("AKIAIEGEWS7XSW5GKKVA","XNwk+CUif/dWK0lL+vADcTsjzCc+iyPzMYcexRiQ ")
+//val awsCredentials = BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY_ID"), System.getenv("AWS_SECRET_ACCESS_KEY"))
+val awsCredentials = BasicAWSCredentials("AKIAIEGEWS7XSW5GKKVA","XNwk+CUif/dWK0lL+vADcTsjzCc+iyPzMYcexRiQ ")
 val awsBucketName = "operationshutdown-debuts"
 val processedDebutsFile by lazy { readPlayerFile(processedDebutsPath) }
 val stashedFile by lazy { readPlayerFile(stashPath) }
@@ -106,6 +106,7 @@ fun main(args: Array<String>) {
             "addtostash" -> addPlayersToStash()
             "dropfromstash" -> dropPlayersFromStash()
             "createinitialdebuts" -> createInitialDebuts()
+            "refreshaccesstoken" -> refreshAccessToken()
         }
     } catch(e:Exception){
         // TODO log stack trace
@@ -120,6 +121,10 @@ data class Entry(var timestamp: Date?, val brPlayer: BrPlayer, val yahooPlayer: 
     override fun equals(other: Any?): Boolean {
         return (other as Entry).brPlayer.id == brPlayer.id
     }
+}
+
+fun refreshAccessToken(){
+    getNewToken()
 }
 
 fun finalize(message:String){
