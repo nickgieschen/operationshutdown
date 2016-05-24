@@ -1,10 +1,5 @@
 package debuts
 
-import com.amazonaws.auth.BasicAWSCredentials
-import com.amazonaws.services.s3.AmazonS3Client
-import com.amazonaws.services.s3.model.GetObjectRequest
-import com.amazonaws.services.s3.model.PutObjectRequest
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.jsoup.Jsoup
 import yahooFacade.*
 
@@ -13,41 +8,25 @@ import com.sun.jersey.api.client.Client
 import com.sun.jersey.api.client.ClientResponse
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter
 import com.sun.jersey.core.util.MultivaluedMapImpl
+import org.apache.commons.cli.*
 import org.jdom2.input.SAXBuilder
-import java.io.BufferedReader
 import java.io.File
-import java.io.InputStreamReader
 import java.io.StringReader
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.Paths
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.logging.FileHandler
-import java.util.logging.Level
-import java.util.logging.Logger
-import java.util.logging.SimpleFormatter
+import java.util.logging.*
 import javax.ws.rs.core.MediaType
 
-val mapper = jacksonObjectMapper()
 val baseUrl = "http://fantasysports.yahooapis.com/fantasy/v2"
 val leagueId = "357.l.25371"
 val leagueUrl = "$baseUrl/league/$leagueId"
-val stashPath = path("onStash")
-val processedDebutsPath = path("processedDebuts")
-var logMessage = mutableListOf<String>()
 val stashKey = "$leagueId.t.19"
 var cmd = ""
 val logger = Logger.getLogger("debuts")
-var logName: String = ""
+var logFileName: String = ""
 val mailApiKey = "key-3ea1820206278de2b23796653ae96116"
-//val awsCredentials = BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY_ID"), System.getenv("AWS_SECRET_ACCESS_KEY"))
-val awsCredentials = BasicAWSCredentials("AKIAIEGEWS7XSW5GKKVA","XNwk+CUif/dWK0lL+vADcTsjzCc+iyPzMYcexRiQ ")
-val awsBucketName = "operationshutdown-debuts"
-val processedDebutsFile by lazy { readPlayerFile(processedDebutsPath) }
-val stashedFile by lazy { readPlayerFile(stashPath) }
-
-
+var testing = true
+val data = Data()
 val teamAbbrMap = mapOf(
         Pair("ARI", "Ari"),
         Pair("ATL", "Atl"),
@@ -87,106 +66,130 @@ data class BrPlayer(val id: String, val name: String, val debut: String, val tea
 data class YahooPlayer(val name: String, val first: String, val last: String, val team: String,
                        val key: String, val id: String, val ownership: String)
 
-
-// TODO easy processed and stash views
-// TODO persist access token
-fun main(args: Array<String>) {
-
-    try {
-        cmd = args[0]
-
-        logName = "$cmd-${SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().time)}"
-        logger.level = Level.ALL
-        val fh = FileHandler(logName)
-        logger.addHandler(fh)
-        fh.formatter = SimpleFormatter()
-
-        println("executing $cmd")
-        when (cmd) {
-            "addtostash" -> addPlayersToStash()
-            "dropfromstash" -> dropPlayersFromStash()
-            "createinitialdebuts" -> createInitialDebuts()
-            "refreshaccesstoken" -> refreshAccessToken()
-        }
-    } catch(e:Exception){
-        // TODO log stack trace
-        println(e.printStackTrace())
-        logger.info(e.message)
-        persistLogs()
-        sendResults("Top level error:\n${e.toString()}")
-    }
-}
-
+//TODO: this
 data class Entry(var timestamp: Date?, val brPlayer: BrPlayer, val yahooPlayer: YahooPlayer?) {
     override fun equals(other: Any?): Boolean {
         return (other as Entry).brPlayer.id == brPlayer.id
     }
+
+    override fun hashCode(): Int {
+        var result = timestamp?.hashCode() ?: 0
+        result = 31 * result + brPlayer.hashCode()
+        result = 31 * result + (yahooPlayer?.hashCode() ?: 0)
+        return result
+    }
 }
 
-fun refreshAccessToken(){
+enum class PlayerStatus {
+    STASHED,
+    PROCESSED
+}
+
+fun main(args: Array<String>) {
+
+    println("hi")
+    println(args[0])
+
+    fun parseCommandLine(): CommandLine {
+        val options = Options()
+        options.addOption("t", "Run in $args test mode. No persistence to S3 or league.")
+        options.addOption(Option.builder("p").hasArg().argName("PLAYER_ID").desc("The player id process").build())
+
+        val parser = DefaultParser()
+        return parser.parse(options, args)!!
+    }
+
+    fun setupLog(cmd: String) {
+        logger.level = Level.ALL
+
+        logFileName = "$cmd-${SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().time)}"
+        val fh = FileHandler(logFileName)
+        fh.formatter = SimpleFormatter()
+        logger.addHandler(fh)
+
+        val ch = ConsoleHandler()
+        ch.formatter = SimpleFormatter()
+        logger.addHandler(ch)
+    }
+
+    try {
+        val cl = parseCommandLine()
+
+        testing = cl.hasOption("t")
+        val player = cl.getOptionValue("p", null)
+        cmd = cl.argList.last()
+
+        setupLog(cmd)
+
+        logger.info("executing $cmd")
+        if (testing) logger.info("TESTING")
+
+        when (cmd) {
+            "addtostash" -> addPlayersToStash(player)
+            "dropfromstash" -> dropPlayersFromStash()
+            "createinitialdebuts" -> createInitialDebuts()
+            "refreshaccesstoken" -> refreshAccessToken()
+        }
+    } catch(e: Exception) {
+        logger.info(e.message)
+        data.persist(logFileName, File(logFileName))
+        sendResults("Top level error:\n${e.toString()}")
+    }
+}
+
+
+fun refreshAccessToken() {
     getNewToken()
 }
 
-fun finalize(message:String){
-    try {
+fun finalize(message: String) {
+    if (!testing) {
         sendResults(message)
-    } catch (e:Exception){
-        println("Couldn't send results:\n${e.toString()}")
+        data.persist(logFileName, File(logFileName))
     }
-    try {
-        persistLogs()
-    } catch (e:Exception){
-        println("Couldn't persist logs:\n${e.toString()}")
-    }
-    try {
-        persistPlayerFiles()
-    } catch (e:Exception){
-        println("Couldn't persist players:\n${e.toString()}")
-    }
-}
-
-fun persistPlayerFiles() {
-    val s3Client = AmazonS3Client(awsCredentials)
-    s3Client.putObject(PutObjectRequest(awsBucketName, stashPath.fileName.toString(), stashPath.toFile()))
-    s3Client.putObject(PutObjectRequest(awsBucketName, processedDebutsPath.fileName.toString(), processedDebutsPath.toFile()))
-}
-
-fun persistLogs(){
-    println("Persisting log $logName")
-    val s3Client = AmazonS3Client(awsCredentials)
-    s3Client.putObject(PutObjectRequest(awsBucketName, logName, File(logName)))
 }
 
 fun sendResults(message: String) {
-    val client = Client.create()
-    client.addFilter(HTTPBasicAuthFilter("api", mailApiKey))
-    val webResource = client.resource("https://api.mailgun.net/v3/sandbox3399bf9e4d004e239afcc5e0e0b1c336.mailgun.org/messages")
-    val formData = MultivaluedMapImpl()
-    formData.add("from", "Mailgun Sandbox <postmaster@sandbox3399bf9e4d004e239afcc5e0e0b1c336.mailgun.org>")
-    formData.add("to", "nickgieschen@gmail.com")
-    formData.add("subject", "debuts $cmd - $cmd-${SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().time)}")
-    formData.add("text", message)
-    webResource.type(MediaType.APPLICATION_FORM_URLENCODED).post(ClientResponse::class.java, formData)
+    try {
+        val client = Client.create()
+        client.addFilter(HTTPBasicAuthFilter("api", mailApiKey))
+        val webResource = client.resource("https://api.mailgun.net/v3/sandbox3399bf9e4d004e239afcc5e0e0b1c336.mailgun.org/messages")
+        val formData = MultivaluedMapImpl()
+        formData.add("from", "Mailgun Sandbox <postmaster@sandbox3399bf9e4d004e239afcc5e0e0b1c336.mailgun.org>")
+        formData.add("to", "nickgieschen@gmail.com")
+        formData.add("subject", "debuts $cmd - $cmd-${SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().time)}")
+        formData.add("text", message)
+        webResource.type(MediaType.APPLICATION_FORM_URLENCODED).post(ClientResponse::class.java, formData)
+    } catch (e: Exception) {
+        log("Couldn't send results", null, e)
+    }
 }
 
-fun log(message: String, player: Any? = null, e: Exception? = null) {
+fun log(message: String, player: Any?, e: Exception? = null){
     val logMessage = mutableListOf<String>()
-    logMessage.add("\n----------------------------------------")
     logMessage.add(message)
     logMessage.add("----------------------------------------")
-    if (player != null) {
-        logMessage.add(player.toString())
-    }
+    logMessage.add(player.toString())
+    log(logMessage.reduce { acc, line -> acc + "\n" + line }, e)
+}
+
+fun log(message: String, e: Exception? = null) {
+    val logMessage = mutableListOf<String>()
+    logMessage.add("\n")
+    logMessage.add("----------------------------------------")
+    logMessage.add(message)
+    logMessage.add("----------------------------------------")
     if (e != null) {
         logMessage.add(e.toString())
     }
     logger.info(logMessage.reduce { acc, line -> acc + "\n" + line })
 }
 
-fun path(path: String): Path {
-    return Paths.get(path)
-}
-
+/*
+asdfsadfsdaf
+asdfsadfsdaf
+asdfsadfsdaf
+ */
 fun grabDebuts(): List<BrPlayer> {
     return Jsoup.connect("http://www.baseball-reference.com/leagues/MLB/2016-debuts.shtml").get().select("#misc_bio tbody tr").map {
         val tds = it.select("td")
@@ -194,10 +197,14 @@ fun grabDebuts(): List<BrPlayer> {
     }
 }
 
+/**
+ * Doc string thing
+ */
 fun getUnprocessedDebuts(): List<BrPlayer> {
     val allDebuts = grabDebuts()
-    val processedDebuts = processedDebutsFile
-    val onStash = stashedFile
+    val someNum = 0
+    val processedDebuts = data.read(PlayerStatus.PROCESSED)
+    val onStash = data.read(PlayerStatus.STASHED)
     return allDebuts.filterNot { fromAll ->
         processedDebuts.any { fromProcessed -> fromProcessed.brPlayer == fromAll }
                 || onStash.any { fromStash -> fromStash.brPlayer == fromAll }
@@ -205,7 +212,7 @@ fun getUnprocessedDebuts(): List<BrPlayer> {
 }
 
 // Entry point
-fun addPlayersToStash() {
+fun addPlayersToStash(player: String?) {
 
     val ambiguousNames = mutableMapOf<BrPlayer, List<YahooPlayer>>()
     val unmatchedPlayers = mutableListOf<BrPlayer>()
@@ -213,7 +220,14 @@ fun addPlayersToStash() {
     val errorPlayers = mutableListOf<Entry>()
     val stashedPlayers = mutableListOf<Entry>()
 
-    getUnprocessedDebuts().forEach { player ->
+    var unprocessedDebuts = getUnprocessedDebuts()
+
+    // We're only processing the player passed in
+    if (player != null) {
+        unprocessedDebuts = unprocessedDebuts.filter { it.id == player }
+    }
+
+    unprocessedDebuts.forEach { player ->
         val matchesFromYahoo = getFromYahoo(player)
 
         if (matchesFromYahoo.count() > 1) {
@@ -236,13 +250,13 @@ fun addPlayersToStash() {
                     tries++
                     addPlayerToStash(it)
                     it.timestamp = Date()
-                    addToFile(stashPath, it)
+                    data.append(PlayerStatus.STASHED, it)
                     stashedPlayers.add(it)
                     break;
                 } catch (e: Exception) {
                     if (tries == 3) {
                         errorPlayers.add(it)
-                        log("Couldn't add to stash", it)
+                        log("Couldn't add to stash", it, e)
                     }
                 }
             }
@@ -254,30 +268,37 @@ fun addPlayersToStash() {
     // We consider these players processed since when Yahoo adds them they will already have debuted and hence
     // their waiver period will be appropriately after the fact that they've debuted
     unmatchedPlayers.forEach {
-        addToFile(processedDebutsPath, Entry(null, it, null))
+        data.append(PlayerStatus.PROCESSED, Entry(null, it, null))
     }
 
     // TODO
     //${ambiguousNames.map { entry -> entry.key.toString() + entry.value.fold("") { acc, yahoo -> "\n${yahoo.toString()}" } }.reduce { acc, item -> acc + item + "\n" }}
     val msg = """The following players were added to stash:
-        ${stashedPlayers.fold("") { acc, entry -> acc + entry.toString() + "\n" }}
+        ${stashedPlayers.fold("") { acc, entry -> acc + toJson(entry) + "\n" }}
 
         The following players had no matches and were added to processed:
-        ${unmatchedPlayers.fold("") { acc, entry -> acc + entry.toString() + "\n" }}
+        ${unmatchedPlayers.fold("") { acc, entry -> acc + toJson(Entry(null, entry, null)) + "\n" }}
 
         The following players had multiple matches:
 
         There were errors processing the following players:
-        ${errorPlayers.fold("") { acc, entry -> acc + entry.toString() + "\n" }}
+        ${errorPlayers.fold("") { acc, entry -> acc + toJson(entry) + "\n" }}
     """
 
-    finalize(msg)
+    if (player == null) {
+        //finalize(msg)
+    } else {
+        print(msg)
+    }
 }
 
+fun toJson(entry: Entry): String? {
+    return mapper.writeValueAsString(entry)
+}
 
 fun dropPlayersFromStash() {
 
-    val players = stashedFile.filter { it.timestamp!!.before(aDayAgo()) }
+    val players = data.read(PlayerStatus.STASHED).filter { it.timestamp!!.before(aDayAgo()) }
     val droppedFromStashPlayers = mutableListOf<Entry>()
     val errorPlayers = mutableListOf<Entry>()
 
@@ -287,8 +308,8 @@ fun dropPlayersFromStash() {
             try {
                 tries++
                 dropPlayerFromStash(it)
-                removeFromFile(stashPath, it)
-                addToFile(processedDebutsPath, it)
+                data.delete(PlayerStatus.STASHED, it)
+                data.append(PlayerStatus.PROCESSED, it)
                 droppedFromStashPlayers.add(it)
                 break
             } catch (e: Exception) {
@@ -301,10 +322,10 @@ fun dropPlayersFromStash() {
     }
 
     val msg = """The following players were dropped from stash:
-        ${droppedFromStashPlayers.fold("") { acc, entry -> acc + entry.toString() + "\n" }}
+        ${droppedFromStashPlayers.fold("") { acc, entry -> acc + toJson(entry) + "\n" }}
 
         There were errors processing the following players:
-        ${errorPlayers.fold("") { acc, entry -> acc + entry.toString() + "\n" }}
+        ${errorPlayers.fold("") { acc, entry -> acc + toJson(entry) + "\n" }}
     """
 
     finalize(msg)
@@ -316,54 +337,9 @@ fun aDayAgo(): Date {
     return cal.time!!
 }
 
-fun addToFile(path: Path, entry: Entry) {
-
-    // TODO shitty
-    val players = if (path == processedDebutsPath){
-        processedDebutsFile
-    } else {
-        stashedFile
-    }
-    //val players = readPlayerFile(path)
-    if (!players.contains(entry)) {
-        val new = players.toMutableList()
-        new.add(entry)
-        writePlayerFile(path, new)
-    }
-}
-
-fun removeFromFile(path: Path, entry: Entry) {
-    val players = readPlayerFile(path)
-    val new = players.toMutableList()
-    if (new.remove(entry)) {
-        writePlayerFile(path, new)
-    }
-}
-
-fun writePlayerFile(path: Path, players: List<Entry>) {
-    Files.write(path, players.map {
-        mapper.writeValueAsString(it)
-    })
-}
-
-fun readPlayerFile(path: Path): List<Entry> {
-    println("Reading ${path.fileName.toString()} from S3")
-    val s3Client = AmazonS3Client(awsCredentials)
-    val obj = s3Client.getObject(GetObjectRequest(awsBucketName, path.fileName.toString()))
-    val reader = BufferedReader(InputStreamReader(obj.objectContent));
-    val players = mutableListOf<Entry>()
-    reader.forEachLine {
-        players.add(mapper.readValue<Entry>(it, Entry::class.java))
-    }
-    obj.close()
-    Files.write(path, players.map {
-        mapper.writeValueAsString(it)
-    })
-    return players
-}
-
 fun addPlayerToStash(player: Entry) {
-    val addPayload = """<fantasy_content>
+    if (!testing) {
+        val addPayload = """<fantasy_content>
       <transaction>
         <type>add</type>
         <player>
@@ -375,11 +351,13 @@ fun addPlayerToStash(player: Entry) {
         </player>
       </transaction>
     </fantasy_content>"""
-    val addResponse = sendRequest(Verb.POST, "$leagueUrl/transactions?format=xml", addPayload)
+        sendRequest(Verb.POST, "$leagueUrl/transactions?format=xml", addPayload)
+    }
 }
 
 fun dropPlayerFromStash(player: Entry) {
-    val dropPayload = """<fantasy_content>
+    if (!testing) {
+        val dropPayload = """<fantasy_content>
       <transaction>
         <type>drop</type>
         <player>
@@ -391,7 +369,8 @@ fun dropPlayerFromStash(player: Entry) {
         </player>
       </transaction>
     </fantasy_content>"""
-    val dropResponse = sendRequest(Verb.POST, "$leagueUrl/transactions?format=xml", dropPayload)
+        sendRequest(Verb.POST, "$leagueUrl/transactions?format=xml", dropPayload)
+    }
 }
 
 fun getFromYahoo(player: BrPlayer): List<YahooPlayer> {
@@ -411,7 +390,7 @@ fun getFromYahoo(player: BrPlayer): List<YahooPlayer> {
                 it.getChild("ownership", ns).getChildText("ownership_type", ns))
     }
     return p.filter {
-        it.last.endsWith(lastPartOfName) && it.team == teamAbbrMap.get(player.team)
+        it.last.endsWith(lastPartOfName) && it.team == teamAbbrMap[player.team]
     }
 }
 
@@ -432,8 +411,9 @@ fun createInitialDebuts() {
         }
     }
 
-    writePlayerFile(processedDebutsPath, matchedPlayers)
+    data.persist(PlayerStatus.PROCESSED, matchedPlayers)
 }
+
 /*
 fun readFileOfYahooPlayers(path: Path): List<YahooPlayer> {
     return Files.readAllLines(path).map {
