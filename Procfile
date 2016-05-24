@@ -1,2 +1,2 @@
-addtostash: sh build/install/debuts/bin/debuts addtostash
-dropfromstash: sh build/install/debuts/bin/debuts dropfromstash
+#addtostash: sh build/install/debuts/bin/debuts addtostash
+#dropfromstash: sh build/install/debuts/bin/debuts dropfromstash
