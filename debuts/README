@@ -1,0 +1,5 @@
+To deploy:
+git add, git commit
+gradle stage
+git push heroku master
+heroku local:run ./build/install/debuts/bin/debuts -t addtostash

@@ -62,7 +62,9 @@ class Data {
 
     fun persist(awsObjectName: String, file: File) {
         try {
-            s3Client.putObject(PutObjectRequest(awsBucketName, awsObjectName, file))
+            if (!testing) {
+                s3Client.putObject(PutObjectRequest(awsBucketName, awsObjectName, file))
+            }
         }
         catch (e: Exception){
             log("Couldn't persist.", null, e)
