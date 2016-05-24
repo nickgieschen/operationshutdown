@@ -64,7 +64,15 @@ val teamAbbrMap = mapOf(
 data class BrPlayer(val id: String, val name: String, val debut: String, val team: String)
 
 data class YahooPlayer(val name: String, val first: String, val last: String, val team: String,
-                       val key: String, val id: String, val ownership: String)
+                       val key: String, val id: String, val ownership: String) {
+    constructor(name: String, first: String, last: String, team: String, key: String, id: String, ownership: String, osTeam: String?)
+        : this(name, first, last, team, key, id, ownership)
+    {
+       this.OsTeam = osTeam
+    }
+
+    var OsTeam:String? = null
+}
 
 //TODO: if owned by stash?
 //TODO: if owned?
@@ -117,19 +125,23 @@ fun main(args: Array<String>) {
         val cl = parseCommandLine()
 
         testing = cl.hasOption("t")
-        val player = cl.getOptionValue("p", null)
+        val playerId = cl.getOptionValue("p", null)
         cmd = cl.argList.last()
 
         setupLog(cmd)
 
         logger.info("executing $cmd")
+        if (playerId != null){
+            logger.info("Player $playerId")
+        }
         if (testing) logger.info("TESTING")
 
         when (cmd) {
-            "addtostash" -> addPlayersToStash(player)
+            "addtostash" -> addPlayersToStash(playerId)
             "dropfromstash" -> dropPlayersFromStash()
             "createinitialdebuts" -> createInitialDebuts()
             "refreshaccesstoken" -> refreshAccessToken()
+            "info" -> getInfo(playerId!!)
         }
     } catch(e: Exception) {
         logger.info(e.message)
@@ -138,6 +150,41 @@ fun main(args: Array<String>) {
     }
 }
 
+fun getInfo(playerId: String) {
+
+    val brPlayer = try {
+        grabDebuts().first { it.id.contains(playerId) }
+    } catch (e: Exception) {
+        null
+    }
+
+    if (brPlayer == null) {
+        log("$playerId does not exist in BR")
+        return
+    }
+    log("$playerId is a BR debut player:\n ${brPlayer.toString()}")
+
+    val yahooPlayers = getFromYahoo(brPlayer)
+    if (yahooPlayers.size > 1){
+        log("$playerId has multiple entries:")
+        return
+    } else if (yahooPlayers.size == 0){
+        log("$playerId does not exist in Yahoo:")
+        return
+    }
+
+    val entry = Entry(null, brPlayer, yahooPlayers[0])
+
+    log("$playerId exists in Yahoo:\n ${toJson(entry)}")
+
+    if (data.read(PlayerStatus.STASHED).contains(entry)){
+        log("$playerId is in PROCESSED")
+    }
+
+    if (data.read(PlayerStatus.PROCESSED).contains(entry)){
+        log("$playerId is in STASHED")
+    }
+}
 
 fun refreshAccessToken() {
     getNewToken()
@@ -168,7 +215,7 @@ fun sendResults(message: String) {
     }
 }
 
-fun log(message: String, player: Any?, e: Exception? = null){
+fun log(message: String, player: Any?, e: Exception? = null) {
     val logMessage = mutableListOf<String>()
     logMessage.add(message)
     logMessage.add("----------------------------------------")
@@ -215,19 +262,22 @@ fun getUnprocessedDebuts(): List<BrPlayer> {
 }
 
 // Entry point
-fun addPlayersToStash(player: String?) {
+fun addPlayersToStash(playerId: String?) {
 
     val ambiguousNames = mutableMapOf<BrPlayer, List<YahooPlayer>>()
     val unmatchedPlayers = mutableListOf<BrPlayer>()
     val matchedPlayers = mutableListOf<Entry>()
     val errorPlayers = mutableListOf<Entry>()
     val stashedPlayers = mutableListOf<Entry>()
+    val waiveredPlayers = mutableListOf<Entry>()
+    val alreadyOnStashPlayers = mutableListOf<Entry>()
+    val shouldntBeOwnedPlayers = mutableListOf<Entry>()
 
     var unprocessedDebuts = getUnprocessedDebuts()
 
     // We're only processing the player passed in
-    if (player != null) {
-        unprocessedDebuts = unprocessedDebuts.filter { it.id == player }
+    if (playerId != null) {
+        unprocessedDebuts = unprocessedDebuts.filter { it.id.contains(playerId) }
     }
 
     unprocessedDebuts.forEach { player ->
@@ -245,7 +295,7 @@ fun addPlayersToStash(player: String?) {
     matchedPlayers.forEach {
         val yahooPlayer = it.yahooPlayer!!
         if (yahooPlayer.ownership == "waivers") {
-            log("Waivered player", it)
+            waiveredPlayers.add(it)
         } else if (yahooPlayer.ownership == "freeagents") {
             var tries = 0
             while (tries < 3) {
@@ -264,7 +314,11 @@ fun addPlayersToStash(player: String?) {
                 }
             }
         } else {
-            log("Ownership problem", toJson(it))
+            if (yahooPlayer.OsTeam == "Stash"){
+                alreadyOnStashPlayers.add(it)
+            } else {
+                shouldntBeOwnedPlayers.add(it)
+            }
         }
     }
 
@@ -272,6 +326,18 @@ fun addPlayersToStash(player: String?) {
     // their waiver period will be appropriately after the fact that they've debuted
     unmatchedPlayers.forEach {
         data.append(PlayerStatus.PROCESSED, Entry(null, it, null))
+    }
+
+    // We consider these players processed since when Yahoo adds them they will already have debuted and hence
+    // their waiver period will be appropriately after the fact that they've debuted
+    waiveredPlayers.forEach {
+        data.append(PlayerStatus.PROCESSED, it)
+    }
+
+    // We consider these players processed since when Yahoo adds them they will already have debuted and hence
+    // their waiver period will be appropriately after the fact that they've debuted
+    alreadyOnStashPlayers.forEach {
+        data.append(PlayerStatus.PROCESSED, it)
     }
 
     // TODO
@@ -282,7 +348,16 @@ fun addPlayersToStash(player: String?) {
         The following players had no matches and were added to processed:
         ${unmatchedPlayers.fold("") { acc, entry -> acc + toJson(Entry(null, entry, null)) + "\n" }}
 
+        The following players were waivered and were added to processed:
+        ${waiveredPlayers.fold("") { acc, entry -> acc + toJson(entry) + "\n" }}
+
+        There following players were on Stash already and were added to processed:
+        ${alreadyOnStashPlayers.fold("") { acc, entry -> acc + toJson(entry) + "\n" }}
+
         The following players had multiple matches:
+
+        The following players were on another team, but had not gone through waivers:
+        ${errorPlayers.fold("") { acc, entry -> acc + toJson(entry) + "\n" }}
 
         There were errors processing the following players:
         ${errorPlayers.fold("") { acc, entry -> acc + toJson(entry) + "\n" }}
@@ -386,7 +461,8 @@ fun getFromYahoo(player: BrPlayer): List<YahooPlayer> {
                 it.getChildText("editorial_team_abbr", ns),
                 it.getChildText("player_key", ns),
                 it.getChildText("player_id", ns),
-                it.getChild("ownership", ns).getChildText("ownership_type", ns))
+                it.getChild("ownership", ns).getChildText("ownership_type", ns),
+                it.getChild("ownership", ns).getChildText("owner_team_name", ns))
     }
     return p.filter {
         it.last.endsWith(lastPartOfName) && it.team == teamAbbrMap[player.team]
