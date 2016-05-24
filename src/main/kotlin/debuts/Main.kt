@@ -87,7 +87,7 @@ enum class PlayerStatus {
 
 fun main(args: Array<String>) {
 
-    println("hi")
+    println("hi mom")
     println(args[0])
 
     fun parseCommandLine(): CommandLine {
