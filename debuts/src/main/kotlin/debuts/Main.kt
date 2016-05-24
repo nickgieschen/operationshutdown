@@ -66,7 +66,8 @@ data class BrPlayer(val id: String, val name: String, val debut: String, val tea
 data class YahooPlayer(val name: String, val first: String, val last: String, val team: String,
                        val key: String, val id: String, val ownership: String)
 
-//TODO: this
+//TODO: if owned by stash?
+//TODO: if owned?
 data class Entry(var timestamp: Date?, val brPlayer: BrPlayer, val yahooPlayer: YahooPlayer?) {
     override fun equals(other: Any?): Boolean {
         return (other as Entry).brPlayer.id == brPlayer.id
@@ -146,6 +147,8 @@ fun finalize(message: String) {
     if (!testing) {
         sendResults(message)
         data.persist(logFileName, File(logFileName))
+    } else {
+        print(message)
     }
 }
 
@@ -261,7 +264,7 @@ fun addPlayersToStash(player: String?) {
                 }
             }
         } else {
-            log("Ownership problem", it)
+            log("Ownership problem", toJson(it))
         }
     }
 
@@ -285,11 +288,7 @@ fun addPlayersToStash(player: String?) {
         ${errorPlayers.fold("") { acc, entry -> acc + toJson(entry) + "\n" }}
     """
 
-    if (player == null) {
-        //finalize(msg)
-    } else {
-        print(msg)
-    }
+    finalize(msg)
 }
 
 fun toJson(entry: Entry): String? {
@@ -315,7 +314,7 @@ fun dropPlayersFromStash() {
             } catch (e: Exception) {
                 if (tries == 3) {
                     errorPlayers.add(it)
-                    log("Couldn't drop player from stash", it, e)
+                    log("Couldn't drop player from stash", toJson(it), e)
                 }
             }
         }
