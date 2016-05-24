@@ -27,16 +27,16 @@ class tests {
 
     //@Test
     fun addsToFile(){
-        addToFile(processedDebutsPath, Entry(Date(), brPlayer, yahooPlayer))
+        //addToFile(processedDebutsPath, Entry(Date(), brPlayer, yahooPlayer))
     }
 
     //@Test
     fun removesFromFile(){
-        removeFromFile(processedDebutsPath, Entry(Date(), brPlayer, yahooPlayer))
+        //removeFromFile(processedDebutsPath, Entry(Date(), brPlayer, yahooPlayer))
     }
 
     fun dropsPlayersFromStash(){
-        addPlayersToStash()
+        addPlayersToStash(null)
         //println(getFromYahoo(brPlayer))
     }
 }
