@@ -61,7 +61,8 @@ val teamAbbrMap = mapOf(
 )
 
 
-data class BrPlayer(val id: String, val name: String, val debut: String, val team: String)
+data class BrPlayer(val id: String, val name: String, val debut: String, val team: String){
+}
 
 data class YahooPlayer(val name: String, val first: String, val last: String, val team: String,
                        val key: String, val id: String, val ownership: String) {
@@ -96,7 +97,6 @@ enum class PlayerStatus {
 
 fun main(args: Array<String>) {
 
-    println("hi mom")
     println(args[0])
 
     fun parseCommandLine(): CommandLine {
@@ -252,12 +252,11 @@ fun grabDebuts(): List<BrPlayer> {
  */
 fun getUnprocessedDebuts(): List<BrPlayer> {
     val allDebuts = grabDebuts()
-    val someNum = 0
     val processedDebuts = data.read(PlayerStatus.PROCESSED)
     val onStash = data.read(PlayerStatus.STASHED)
     return allDebuts.filterNot { fromAll ->
-        processedDebuts.any { fromProcessed -> fromProcessed.brPlayer == fromAll }
-                || onStash.any { fromStash -> fromStash.brPlayer == fromAll }
+        processedDebuts.any { fromProcessed -> fromProcessed.brPlayer.id == fromAll.id }
+                || onStash.any { fromStash -> fromStash.brPlayer.id == fromAll.id }
     }
 }
 
@@ -328,11 +327,10 @@ fun addPlayersToStash(playerId: String?) {
         data.append(PlayerStatus.PROCESSED, Entry(null, it, null))
     }
 
-    // We consider these players processed since when Yahoo adds them they will already have debuted and hence
-    // their waiver period will be appropriately after the fact that they've debuted
-    waiveredPlayers.forEach {
-        data.append(PlayerStatus.PROCESSED, it)
-    }
+    // Waivered players will be put on stash once they fall off waivers
+//    waiveredPlayers.forEach {
+//        data.append(PlayerStatus.PROCESSED, it)
+//    }
 
     // We consider these players processed since when Yahoo adds them they will already have debuted and hence
     // their waiver period will be appropriately after the fact that they've debuted

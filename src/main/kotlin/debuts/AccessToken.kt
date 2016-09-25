@@ -14,8 +14,8 @@ import java.io.InputStreamReader
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.*
-import debuts.awsCredentials
 import debuts.awsBucketName
+import debuts.Data
 
 //val awsCredentials = BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY_ID"), System.getenv("AWS_SECRET_ACCESS_KEY"))
 //val awsBucketName = "operationshutdown-debuts"
@@ -28,6 +28,7 @@ val service = ServiceBuilder()
         .apiKey(clientID)
         .apiSecret(clientSecret)
         .build(YahooApi.instance())
+val data = Data()
 
 /**
  * @param payload Should be string xml
@@ -127,13 +128,13 @@ fun refreshToken(): Boolean {
 
 fun sendTokenToS3(accessToken: AccessToken) {
     Files.write(accessTokenPath, listOf(accessToken.token, accessToken.tokenSecret, accessToken.sessionHandle))
-    val s3Client = AmazonS3Client(awsCredentials)
+    val s3Client = data.s3Client
     s3Client.putObject(PutObjectRequest(awsBucketName, "yahooAccessToken", accessTokenPath.toFile()))
 }
 
 fun readTokenFromS3(): Boolean {
     try {
-        val s3Client = AmazonS3Client(awsCredentials)
+        val s3Client = data.s3Client
         val obj = s3Client.getObject(GetObjectRequest(awsBucketName, "yahooAccessToken"))
         accessToken = AccessToken(InputStreamReader(obj.objectContent).buffered().use { it.readLines() })
         return true
