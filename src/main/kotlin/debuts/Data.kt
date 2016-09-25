@@ -20,7 +20,6 @@ class Data {
     val s3Client: AmazonS3Client
         get() {
             if (_s3Client == null) {
-                //val awsCredentials = BasicAWSCredentials("AKIAIEGEWS7XSW5GKKVA", "XNwk+CUif/dWK0lL+vADcTsjzCc+iyPzMYcexRiQ ")
                 val awsCredentials = BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY_ID"), System.getenv("AWS_SECRET_ACCESS_KEY"))
                 _s3Client = AmazonS3Client(awsCredentials)
             }
