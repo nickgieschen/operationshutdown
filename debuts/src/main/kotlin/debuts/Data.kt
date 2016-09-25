@@ -13,22 +13,41 @@ import java.nio.file.Paths
 
 val mapper = jacksonObjectMapper()
 val awsBucketName = "operationshutdown-debuts"
-val awsCredentials = BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY_ID"), System.getenv("AWS_SECRET_ACCESS_KEY"))
-//val awsCredentials = BasicAWSCredentials("AKIAIEGEWS7XSW5GKKVA", "XNwk+CUif/dWK0lL+vADcTsjzCc+iyPzMYcexRiQ ")
-val s3Client = AmazonS3Client(awsCredentials)
 
 class Data {
-    fun read(objName: PlayerStatus): MutableList<Entry> {
-        println("Reading ${objName.name} from S3")
 
-        val obj = s3Client.getObject(GetObjectRequest(awsBucketName, objName.name))
-        val reader = BufferedReader(InputStreamReader(obj.objectContent));
+    private  var _s3Client:AmazonS3Client? = null
+    val s3Client: AmazonS3Client
+        get() {
+            if (_s3Client == null) {
+                //val awsCredentials = BasicAWSCredentials("AKIAIEGEWS7XSW5GKKVA", "XNwk+CUif/dWK0lL+vADcTsjzCc+iyPzMYcexRiQ ")
+                val awsCredentials = BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY_ID"), System.getenv("AWS_SECRET_ACCESS_KEY"))
+                _s3Client = AmazonS3Client(awsCredentials)
+            }
+            return _s3Client!!
+        }
+
+
+    fun read(objName: PlayerStatus): MutableList<Entry> {
+        println("Reading ${objName.name} from " + if (testing) "testdb" else "S3")
+
         val players = mutableListOf<Entry>()
 
-        reader.forEachLine {
-            players.add(mapper.readValue<Entry>(it, Entry::class.java))
+        if (testing){
+            val file = File("testdb/" + objName.toString())
+            val lines = file.readLines()
+            lines.forEach {
+                players.add(mapper.readValue<Entry>(it, Entry::class.java))
+            }
+        } else {
+            val obj = s3Client.getObject(GetObjectRequest(awsBucketName, objName.name))
+            val reader = BufferedReader(InputStreamReader(obj.objectContent));
+            reader.forEachLine {
+                players.add(mapper.readValue<Entry>(it, Entry::class.java))
+            }
+            obj.close()
         }
-        obj.close()
+
         return players
     }
 

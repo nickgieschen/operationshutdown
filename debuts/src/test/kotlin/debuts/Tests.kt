@@ -35,6 +35,7 @@ class tests {
         //removeFromFile(processedDebutsPath, Entry(Date(), brPlayer, yahooPlayer))
     }
 
+    @Test
     fun dropsPlayersFromStash(){
         addPlayersToStash(null)
         //println(getFromYahoo(brPlayer))
