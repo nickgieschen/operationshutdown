@@ -1,5 +1,5 @@
 To deploy:
 git add, git commit
 gradle stage
-git push heroku master
+git subtree push --prefix debuts heroku master
 heroku local:run ./build/install/debuts/bin/debuts -t addtostash
