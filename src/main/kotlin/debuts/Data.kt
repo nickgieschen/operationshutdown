@@ -1,92 +1,64 @@
 package debuts
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.amazonaws.services.s3.AmazonS3Client
-import com.amazonaws.services.s3.model.GetObjectRequest
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import com.amazonaws.auth.BasicAWSCredentials
-import com.amazonaws.services.s3.model.PutObjectRequest
-import java.io.File
-import java.nio.file.Files
-import java.nio.file.Paths
+import org.jsoup.Jsoup
+import redis.clients.jedis.JedisPool
 
-val mapper = jacksonObjectMapper()
-val awsBucketName = "operationshutdown-debuts"
+@Open
+class Data(val jedisPool: JedisPool) {
 
-class Data {
+    val mapper = jacksonObjectMapper()
 
-    private  var _s3Client:AmazonS3Client? = null
-    val s3Client: AmazonS3Client
-        get() {
-            if (_s3Client == null) {
-                val awsCredentials = BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY_ID"), System.getenv("AWS_SECRET_ACCESS_KEY"))
-                _s3Client = AmazonS3Client(awsCredentials)
-            }
-            return _s3Client!!
-        }
-
-
-    fun read(objName: PlayerStatus): MutableList<Entry> {
-        println("Reading ${objName.name} from " + if (testing) "testdb" else "S3")
-
-        val players = mutableListOf<Entry>()
-
-        if (testing){
-            val file = File("testdb/" + objName.toString())
-            val lines = file.readLines()
-            lines.forEach {
-                players.add(mapper.readValue<Entry>(it, Entry::class.java))
-            }
-        } else {
-            val obj = s3Client.getObject(GetObjectRequest(awsBucketName, objName.name))
-            val reader = BufferedReader(InputStreamReader(obj.objectContent));
-            reader.forEachLine {
-                players.add(mapper.readValue<Entry>(it, Entry::class.java))
-            }
-            obj.close()
-        }
-
-        return players
-    }
-
-    fun append(playerStatus: PlayerStatus, entry: Entry) {
-        val players = read(playerStatus)
-        if (!players.contains(entry)) {
-            val new = players.toMutableList()
-            new.add(entry)
-            persist(playerStatus, new)
+    fun findDebutPlayers(): List<BrPlayer> {
+        return Jsoup.connect("http://www.baseball-reference.com/leagues/MLB/2017-debuts.shtml").get().select("#misc_bio tbody tr").map {
+            val tds = it.select("td")
+            BrPlayer(tds[0].select("a").attr("href"), tds[1].text(), tds[3].attr("csk"), tds[6].text())
         }
     }
 
-    // This deletes players
-    fun delete(playerStatus: PlayerStatus, entry: Entry) {
-        val players = read(playerStatus)
-        val new = players.toMutableList()
-        if (new.remove(entry)) {
-            persist(playerStatus, new)
+    fun findProcessedPlayers(): List<Entry> {
+        jedisPool.resource.use {
+            return it.smembers("processed").map { mapper.readValue<Entry>(it, Entry::class.java) }
         }
     }
 
-    fun persist(playerStatus: PlayerStatus, data: List<Entry>) {
-        val path = Paths.get(playerStatus.name)
-
-        Files.write(path, data.map {
-            mapper.writeValueAsString(it)
-        })
-
-        persist(playerStatus.name, path.toFile())
+    fun saveProcessedPlayer(entry: Entry) {
+        jedisPool.resource.use {
+            it.sadd("processed", mapper.writeValueAsString(entry))
+        }
     }
 
-    fun persist(awsObjectName: String, file: File) {
-        try {
-            if (!testing) {
-                s3Client.putObject(PutObjectRequest(awsBucketName, awsObjectName, file))
-            }
+    fun findStashedPlayers(): List<Entry> {
+        jedisPool.resource.use {
+            return it.smembers("stashed").map { mapper.readValue<Entry>(it, Entry::class.java) }
         }
-        catch (e: Exception){
-            log("Couldn't persist.", null, e)
+    }
+
+    fun saveStashedPlayer(entry: Entry) {
+        jedisPool.resource.use {
+            it.sadd("stashed", mapper.writeValueAsString(entry))
+        }
+    }
+
+    fun deleteStashedPlayer(entry: Entry) {
+        jedisPool.resource.use {
+            it.srem("stashed", mapper.writeValueAsString(entry))
+        }
+    }
+
+    fun saveAccessToken(accessToken: Yahoo.AccessToken) {
+        jedisPool.resource.use {
+            it.set("accessTokenSessionHandle", accessToken.sessionHandle)
+            it.set("accessTokenTokenSecret", accessToken.tokenSecret)
+            it.set("accessTokenToken", accessToken.token)
+        }
+    }
+
+    fun fetchAccessToken(): Yahoo.AccessToken? {
+        jedisPool.resource.use {
+            return Yahoo.AccessToken(it.get("accessTokenSessionHandle"),
+                    it.get("accessTokenToken"),
+                    it.get("accessTokenTokenSecret"))
         }
     }
 }
-
