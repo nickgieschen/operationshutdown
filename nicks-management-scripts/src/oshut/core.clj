@@ -37,7 +37,7 @@
 
 ;(defn load-majl-rosters [] (-> "rosters.csv" io/reader csv/parse-csv {:delimiter \;}))
 
-(defn load-majl-rosters [] (csv/parse-csv (io/reader "rosters.csv") :delimiter \; ))
+(defn load-majl-rosters [] (csv/parse-csv (io/reader "rosters.csv") :delimiter \, ))
 
 (defn load-draft [] (-> "draft.csv" io/reader csv/parse-csv))
 
@@ -116,6 +116,7 @@
   (spit (str "avail-" proj "-" pos ".csv") (reduce #(str %1 "\n" (apply str (interpose "," %2))) "" (generate-avail proj pos))))
 
 ;(spit-avail "pecota" "pitchers")
-;(generate-draft-rounds)
+(generate-draft-rounds)
+
 
 
